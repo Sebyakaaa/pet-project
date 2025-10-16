@@ -3,15 +3,19 @@ import { css } from '@emotion/react';
 import { fetchData } from '../services/api';
 
 export default function ButtonUsage() {
-    const handleClick = async () => {
-        fetchData();
-    }
+  const handleClick = async () => {
+    fetchData();
+  };
 
-    return (
-        <div css={css`
-            margin-top: 5px;
-        `}>
-            <Button onClick={handleClick} variant="contained">Hello world</Button>
-        </div>
-    );
+  return (
+    <div
+      css={css`
+        margin-top: 5px;
+      `}
+    >
+      <Button onClick={handleClick} variant="contained">
+        Hello world
+      </Button>
+    </div>
+  );
 }
