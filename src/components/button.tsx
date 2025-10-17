@@ -1,8 +1,9 @@
-import Button from '@mui/material/Button';
 import { css } from '@emotion/react';
+import Button from '@mui/material/Button';
+
 import { fetchData } from '../services/api';
 
-export default function ButtonUsage() {
+export const ButtonUsage = () => {
   const handleClick = async () => {
     fetchData();
   };
@@ -18,4 +19,4 @@ export default function ButtonUsage() {
       </Button>
     </div>
   );
-}
+};
