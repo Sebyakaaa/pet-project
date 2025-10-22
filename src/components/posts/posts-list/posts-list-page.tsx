@@ -1,6 +1,11 @@
-import { DUMMY_POSTS } from './posts-data';
+import { useSelector } from 'react-redux';
+
+import { RootState } from '../store/store';
+
 import { PostsList } from './posts-list';
 
 export const PostsListPage = () => {
-  return <PostsList posts={DUMMY_POSTS} />;
+  const posts = useSelector((state: RootState) => state.postList.postItems);
+
+  return <PostsList posts={posts} />;
 };

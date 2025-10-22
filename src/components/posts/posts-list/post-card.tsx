@@ -3,12 +3,12 @@ import { useNavigation } from '../../../hooks/use-navigation';
 import { StyledCard } from './styled';
 
 interface PostCardProps {
-  children: string;
+  title: string;
   id: string;
   image: string;
 }
 
-export const PostCard = ({ id, image, children }: PostCardProps) => {
+export const PostCard = ({ id, image, title }: PostCardProps) => {
   const { goToPostItem } = useNavigation();
   const handleClick = () => {
     goToPostItem(id);
@@ -17,7 +17,7 @@ export const PostCard = ({ id, image, children }: PostCardProps) => {
   return (
     <StyledCard data-id={id} maxWidth="sm" onClick={handleClick}>
       <img src={image} loading="lazy" alt={`Blog Picture-${id}`} />
-      <p>{children}</p>
+      <h3>{title}</h3>
     </StyledCard>
   );
 };

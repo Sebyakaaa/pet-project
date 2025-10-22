@@ -29,8 +29,4 @@ export const StyledCard = styled(Container)`
     border-radius: 8px;
     margin-bottom: 16px;
   }
-  p {
-    font-size: 16px;
-    line-height: 1.5;
-  }
 `;
