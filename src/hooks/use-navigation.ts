@@ -8,6 +8,7 @@ export const useNavigation = () => {
   return {
     goToLogin: () => navigate(ROUTES.LOGIN),
     goToPosts: () => navigate(ROUTES.POSTS),
+    goToPostItem: (id: string) => navigate(`${ROUTES.POSTS}/${id}`),
     goToHome: () => navigate(ROUTES.HOME),
   };
 };

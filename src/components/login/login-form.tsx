@@ -21,14 +21,14 @@ export const LoginForm = () => {
         <StyledTextField
           autoFocus
           required
-          variant="filled"
+          variant="outlined"
           placeholder="Enter your email"
           type="email"
           id="email"
         />
         <StyledTextField
           required
-          variant="filled"
+          variant="outlined"
           placeholder="Enter password"
           type="password"
           id="password"

@@ -12,7 +12,7 @@ export const StyledForm = styled.form`
 `;
 
 export const StyledTextField = styled(TextField)`
-  color: #fff;
+  border-color: #e2e8f0;
 `;
 
 export const StyledButton = styled(BaseButton)`
