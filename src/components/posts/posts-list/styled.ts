@@ -12,11 +12,9 @@ export const StyledList = styled.ul`
 
 export const StyledCard = styled(Container)`
   background-color: #1e293b;
-  padding: 24px;
   border-radius: 8px;
   border: 1px solid rgba(148, 163, 184, 0.1);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  max-width: 400px;
 
   &:hover {
     border-color: rgba(96, 165, 250, 0.3);
@@ -29,4 +27,11 @@ export const StyledCard = styled(Container)`
     border-radius: 8px;
     margin-bottom: 16px;
   }
+`;
+
+export const StyledAddContainer = styled.div`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
 `;

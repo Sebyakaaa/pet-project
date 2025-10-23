@@ -15,7 +15,7 @@ export const PostCard = ({ id, image, title }: PostCardProps) => {
   };
 
   return (
-    <StyledCard data-id={id} maxWidth="sm" onClick={handleClick}>
+    <StyledCard data-id={id} maxWidth="sm" sx={{ p: 3 }} onClick={handleClick}>
       <img src={image} loading="lazy" alt={`Blog Picture-${id}`} />
       <h3>{title}</h3>
     </StyledCard>

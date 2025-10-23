@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { useNavigation } from '../../hooks/use-navigation';
 import { fetchData } from '../../services/api';
 import { BaseButton } from '../base-button';
@@ -11,8 +13,10 @@ export const LoginForm = () => {
     fetchData();
   };
 
-  const handlePostsClick = () => {
+  const handlePostsClick = async () => {
+    // const posts = await axios.get('/posts');
     goToPosts();
+    // console.log(posts);
   };
 
   return (
