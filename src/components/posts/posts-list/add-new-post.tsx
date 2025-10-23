@@ -43,7 +43,7 @@ export const AddNewPost = () => {
         }}
         sx={{ mt: 1 }}
       >
-        <Box sx={{ p: 3, width: 800 }}>
+        <Box sx={{ p: 3, width: 700 }}>
           <Typography variant="h6">Add New Post</Typography>
           <TextField label="Title" fullWidth sx={{ mt: 2 }} />
           <TextField label="Content" multiline rows={4} fullWidth sx={{ mt: 2 }} />

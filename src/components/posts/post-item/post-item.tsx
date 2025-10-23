@@ -1,5 +1,10 @@
 import { useState } from 'react';
 
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { useDispatch } from 'react-redux';
@@ -19,8 +24,10 @@ interface PostItemProps {
 
 export const PostItem = ({ id, image, title, content }: PostItemProps) => {
   const { goToPosts } = useNavigation();
+
   const [editedContent, setEditedContent] = useState(content);
   const [editedTitle, setEditedTitle] = useState(title);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -35,6 +42,14 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
 
   const handleCancelClick = () => {
     goToPosts();
+  };
+
+  const handleDeleteDialogOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleDeleteDialogClose = () => {
+    setOpenDialog(false);
   };
 
   return (
@@ -69,6 +84,20 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
       >
         <BaseButton onClick={handleSaveClick}>Save</BaseButton>
         <BaseButton onClick={handleCancelClick}>Cancel</BaseButton>
+        <Button variant="outlined" onClick={handleDeleteDialogOpen} startIcon={<DeleteIcon />}>
+          Delete post
+        </Button>
+        <Dialog open={openDialog} onClose={handleDeleteDialogClose} aria-labelledby="delete-dialog">
+          <DialogTitle id="delete-dialog">{'Do you want to delete this post?'}</DialogTitle>
+          <DialogActions>
+            <Button autoFocus onClick={handleDeleteDialogClose}>
+              No
+            </Button>
+            <Button onClick={handleDeleteDialogClose} autoFocus>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Stack>
     </StyledItem>
   );
