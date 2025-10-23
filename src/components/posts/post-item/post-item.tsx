@@ -33,7 +33,7 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
     console.log('Saved:', id, editedTitle);
   };
 
-  const handlePostsClick = () => {
+  const handleCancelClick = () => {
     goToPosts();
   };
 
@@ -68,9 +68,8 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
         }}
       >
         <BaseButton onClick={handleSaveClick}>Save</BaseButton>
-        <BaseButton>Cancel</BaseButton>
+        <BaseButton onClick={handleCancelClick}>Cancel</BaseButton>
       </Stack>
-      <BaseButton onClick={handlePostsClick}>Posts</BaseButton>
     </StyledItem>
   );
 };
