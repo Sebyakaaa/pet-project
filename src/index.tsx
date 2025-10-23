@@ -8,6 +8,10 @@ import { App } from './App';
 import './index.css';
 import { store } from './components/posts/store/store';
 import reportWebVitals from './reportWebVitals';
+import { setupMockAPI } from './services/mock-api';
+
+// Активируем Mock API для перехвата запросов
+setupMockAPI();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
