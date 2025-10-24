@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import { useNavigation } from '../../hooks/use-navigation';
-import { fetchData } from '../../services/api';
 import { BaseButton } from '../base-button';
 
 import { StyledForm, StyledTextField } from './styled';
@@ -10,7 +9,7 @@ export const LoginForm = () => {
   const { goToPosts } = useNavigation();
 
   const handleSubmit = () => {
-    fetchData();
+    console.log('Submitted');
   };
 
   const handlePostsClick = async () => {
