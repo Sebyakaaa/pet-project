@@ -31,9 +31,18 @@ export const postItemSlice = createSlice({
         postItems.title = title;
       }
     },
+    updateItemContent: (
+      state,
+      { payload: { id, content } }: { payload: { id: string; content: string } },
+    ) => {
+      const postItem = state.postItems.find((item) => item.id === id);
+      if (postItem) {
+        postItem.content = content;
+      }
+    },
   },
 });
 
 export const postItemReducer = postItemSlice.reducer;
 
-export const { updateItemTitle } = postItemSlice.actions;
+export const { updateItemTitle, updateItemContent } = postItemSlice.actions;

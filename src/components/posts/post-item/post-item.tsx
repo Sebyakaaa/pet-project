@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 
 import { useNavigation } from '../../../hooks/use-navigation';
 import { BaseButton } from '../../base-button';
-import { updateItemTitle } from '../store/slice';
+import { updateItemContent, updateItemTitle } from '../store/slice';
 
 import { StyledItem } from './styled';
 
@@ -35,9 +35,18 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
     setEditedTitle(event.target.value);
   };
 
-  const handleSaveClick = () => {
+  const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEditedContent(event.target.value);
+  };
+
+  const handleSaveTitleClick = () => {
     dispatch(updateItemTitle({ id, title: editedTitle }));
     console.log('Saved:', id, editedTitle);
+  };
+
+  const handleSaveContentClick = () => {
+    dispatch(updateItemContent({ id, content: editedContent }));
+    console.log('Saved:', id, editedContent);
   };
 
   const handleCancelClick = () => {
@@ -66,12 +75,22 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
           style: { fontSize: '24px' },
         }}
       />
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          justifyContent: 'flex-end',
+          mb: 3,
+        }}
+      >
+        <BaseButton onClick={handleSaveTitleClick}>Save</BaseButton>
+      </Stack>
       <TextField
         fullWidth
         multiline
         rows={10}
         value={editedContent}
-        onChange={(e) => setEditedContent(e.target.value)}
+        onChange={handleContentChange}
         variant="outlined"
         sx={{ mb: 2 }}
       />
@@ -80,9 +99,19 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
         spacing={2}
         sx={{
           justifyContent: 'flex-end',
+          mb: 5,
         }}
       >
-        <BaseButton onClick={handleSaveClick}>Save</BaseButton>
+        <BaseButton onClick={handleSaveContentClick}>Save</BaseButton>
+      </Stack>
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          justifyContent: 'flex-end',
+        }}
+      >
+        <BaseButton>Save all</BaseButton>
         <BaseButton onClick={handleCancelClick}>Cancel</BaseButton>
         <Button variant="outlined" onClick={handleDeleteDialogOpen} startIcon={<DeleteIcon />}>
           Delete post

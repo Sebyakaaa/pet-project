@@ -1,4 +1,5 @@
 import { PostDTO } from '../types/post-dto';
+
 import { apiService } from './api-service';
 
 export const getPostById = (id: number): Promise<PostDTO> => {
