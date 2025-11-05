@@ -1,12 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-
-import { DUMMY_POSTS } from '../posts-list/posts-data';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type PostItem = {
   id: string;
   title: string;
   content: string;
-  imageUrl: string;
+  imageUrl?: string;
 };
 
 export interface PostItemState {
@@ -14,13 +12,19 @@ export interface PostItemState {
 }
 
 const initialState: PostItemState = {
-  postItems: DUMMY_POSTS,
+  postItems: [],
 };
 
 export const postItemSlice = createSlice({
   name: 'postsList',
   initialState,
   reducers: {
+    setPosts: (state, action: PayloadAction<PostItem[]>) => {
+      state.postItems = action.payload;
+    },
+    addPost: (state, action: PayloadAction<PostItem>) => {
+      state.postItems.push(action.payload);
+    },
     updateItemTitle: (
       state,
       { payload: { id, title } }: { payload: { id: string; title: string } },
@@ -45,4 +49,4 @@ export const postItemSlice = createSlice({
 
 export const postItemReducer = postItemSlice.reducer;
 
-export const { updateItemTitle, updateItemContent } = postItemSlice.actions;
+export const { setPosts, addPost, updateItemTitle, updateItemContent } = postItemSlice.actions;

@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import { useDispatch } from 'react-redux';
 
 import { useNavigation } from '../../../hooks/use-navigation';
+import { updatePostContent, updatePostTitle } from '../../../services/posts-service';
 import { BaseButton } from '../../base-button';
 import { updateItemContent, updateItemTitle } from '../store/slice';
 
@@ -18,7 +19,7 @@ import { StyledItem } from './styled';
 interface PostItemProps {
   id: string;
   title: string;
-  image: string;
+  image?: string;
   content: string;
 }
 
@@ -39,14 +40,14 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
     setEditedContent(event.target.value);
   };
 
-  const handleSaveTitleClick = () => {
+  const handleSaveTitleClick = async () => {
+    await updatePostTitle(id, editedTitle);
     dispatch(updateItemTitle({ id, title: editedTitle }));
-    console.log('Saved:', id, editedTitle);
   };
 
-  const handleSaveContentClick = () => {
+  const handleSaveContentClick = async () => {
+    await updatePostContent(id, editedContent);
     dispatch(updateItemContent({ id, content: editedContent }));
-    console.log('Saved:', id, editedContent);
   };
 
   const handleCancelClick = () => {

@@ -2,7 +2,7 @@ import { PostCard } from './post-card';
 import { StyledList } from './styled';
 
 type PostsListProps = {
-  posts: { id: string; title: string; imageUrl: string }[];
+  posts: { id: string; title: string; imageUrl?: string }[];
 };
 
 export const PostsList = ({ posts }: PostsListProps) => {

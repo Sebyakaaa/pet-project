@@ -5,7 +5,7 @@ import { StyledCard } from './styled';
 interface PostCardProps {
   title: string;
   id: string;
-  image: string;
+  image?: string;
 }
 
 export const PostCard = ({ id, image, title }: PostCardProps) => {
