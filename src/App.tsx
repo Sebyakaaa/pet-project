@@ -9,10 +9,9 @@ import './App.css';
 import { LoginForm } from './components/login/login-form';
 import { PostItemPage } from './components/posts/post-item/post-item-page';
 import { PostsListPage } from './components/posts/posts-list/posts-list-page';
-import { setPosts } from './components/posts/store/slice';
-import { RootState } from './components/posts/store/store';
+import { fetchPosts } from './components/posts/store/slice';
+import { AppDispatch } from './components/posts/store/store';
 import { ROUTES } from './hooks/const-routes';
-import { getPostAll } from './services/posts-service';
 
 const darkTheme = createTheme({
   palette: {
@@ -21,15 +20,10 @@ const darkTheme = createTheme({
 });
 
 export const App = () => {
-  const dispatch = useDispatch();
-  const posts = useSelector((state: RootState) => state.postList.postItems);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    const loadPosts = async () => {
-      const posts = await getPostAll();
-      dispatch(setPosts(posts));
-    };
-    loadPosts();
+    dispatch(fetchPosts());
   }, [dispatch]);
 
   return (

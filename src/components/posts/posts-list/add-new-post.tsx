@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import Popover from '@mui/material/Popover';
@@ -17,6 +18,7 @@ import { StyledAddContainer } from './styled';
 
 export const AddNewPost = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
@@ -29,6 +31,7 @@ export const AddNewPost = () => {
   const clearFields = () => {
     setTitle('');
     setContent('');
+    setError(null);
   };
 
   const handleClose = () => {
@@ -39,9 +42,21 @@ export const AddNewPost = () => {
   const open = Boolean(anchorEl);
 
   const handleAddPost = async () => {
-    const newPost = await createPost(title, content);
-    dispatch(addPost(newPost));
-    clearFields();
+    if (!title.trim()) {
+      setError('Title is required');
+      return;
+    }
+    if (!content.trim()) {
+      setError('Content is required');
+      return;
+    }
+    try {
+      const newPost = await createPost(title, content);
+      dispatch(addPost(newPost));
+      clearFields();
+    } catch (error: any) {
+      setError(error.response?.data?.error);
+    }
   };
 
   return (
@@ -64,8 +79,14 @@ export const AddNewPost = () => {
       >
         <Box sx={{ p: 3, width: 700 }}>
           <Typography variant="h6">Add New Post</Typography>
+          {error && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {error}
+            </Alert>
+          )}
           <TextField
             label="Title"
+            required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
@@ -73,6 +94,7 @@ export const AddNewPost = () => {
           />
           <TextField
             label="Content"
+            required
             value={content}
             onChange={(e) => setContent(e.target.value)}
             multiline

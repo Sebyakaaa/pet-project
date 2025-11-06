@@ -1,17 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Loader } from '../../loader';
 import { RootState } from '../store/store';
 
 import { AddNewPost } from './add-new-post';
 import { PostsList } from './posts-list';
 
 export const PostsListPage = () => {
-  const posts = useSelector((state: RootState) => state.postList.postItems);
+  const { isLoading, postItems } = useSelector((state: RootState) => state.postList);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
       <AddNewPost />
-      <PostsList posts={posts} />
+      <PostsList posts={postItems} />
     </>
   );
 };
