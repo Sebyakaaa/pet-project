@@ -10,9 +10,15 @@ import TextField from '@mui/material/TextField';
 import { useDispatch } from 'react-redux';
 
 import { useNavigation } from '../../../hooks/use-navigation';
-import { updatePostContent, updatePostTitle } from '../../../services/posts-service';
+import {
+  deletePostById,
+  updatePostContent,
+  updatePostFull,
+  updatePostTitle,
+} from '../../../services/posts-service';
 import { BaseButton } from '../../base-button';
-import { updateItemContent, updateItemTitle } from '../store/slice';
+import { UploadImage } from '../../upload-image';
+import { deletePost, updateItemContent, updateItemFull, updateItemTitle } from '../store/slice';
 
 import { StyledItem } from './styled';
 
@@ -29,6 +35,7 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
   const [editedContent, setEditedContent] = useState(content);
   const [editedTitle, setEditedTitle] = useState(title);
   const [openDialog, setOpenDialog] = useState(false);
+  const [imageUrl, setImageUrl] = useState(image || '');
 
   const dispatch = useDispatch();
 
@@ -50,6 +57,14 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
     dispatch(updateItemContent({ id, content: editedContent }));
   };
 
+  const handleSaveAllClick = async () => {
+    await updatePostFull(id, editedTitle, editedContent, imageUrl);
+    dispatch(
+      updateItemFull({ id, title: editedTitle, content: editedContent, imageUrl: imageUrl }),
+    );
+    goToPosts();
+  };
+
   const handleCancelClick = () => {
     goToPosts();
   };
@@ -58,13 +73,36 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
     setOpenDialog(true);
   };
 
+  const handleDeletePostClick = async () => {
+    await deletePostById(id);
+    dispatch(deletePost(id));
+    goToPosts();
+  };
+
   const handleDeleteDialogClose = () => {
     setOpenDialog(false);
   };
 
+  const handleDeleteImage = () => {
+    setImageUrl('');
+  };
+
   return (
     <StyledItem data-id={id} maxWidth="lg">
-      <img src={image} alt={`Blog Picture-${id}`} />
+      <img src={imageUrl} alt={`Blog Picture-${id}`} />
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          justifyContent: 'flex-end',
+          mb: 2,
+        }}
+      >
+        <UploadImage onImageSelect={setImageUrl} showPreview={false} />
+        <Button variant="outlined" onClick={handleDeleteImage} startIcon={<DeleteIcon />}>
+          Delete image
+        </Button>
+      </Stack>
       <TextField
         fullWidth
         multiline
@@ -112,7 +150,7 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
           justifyContent: 'flex-end',
         }}
       >
-        <BaseButton>Save all</BaseButton>
+        <BaseButton onClick={handleSaveAllClick}>Save all</BaseButton>
         <BaseButton onClick={handleCancelClick}>Cancel</BaseButton>
         <Button variant="outlined" onClick={handleDeleteDialogOpen} startIcon={<DeleteIcon />}>
           Delete post
@@ -123,7 +161,7 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
             <Button autoFocus onClick={handleDeleteDialogClose}>
               No
             </Button>
-            <Button onClick={handleDeleteDialogClose} autoFocus>
+            <Button onClick={handleDeletePostClick} autoFocus>
               Delete
             </Button>
           </DialogActions>

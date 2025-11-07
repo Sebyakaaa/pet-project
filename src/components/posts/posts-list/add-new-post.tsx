@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 
 import { createPost } from '../../../services/posts-service';
 import { BaseButton } from '../../base-button';
+import { UploadImage } from '../../upload-image';
 import { addPost } from '../store/slice';
 
 import { StyledAddContainer } from './styled';
@@ -21,6 +22,7 @@ export const AddNewPost = () => {
   const [error, setError] = useState<string | null>(null);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
 
   const dispatch = useDispatch();
 
@@ -51,9 +53,9 @@ export const AddNewPost = () => {
       return;
     }
     try {
-      const newPost = await createPost(title, content);
+      const newPost = await createPost(title, content, imageUrl);
       dispatch(addPost(newPost));
-      clearFields();
+      handleClose();
     } catch (error: any) {
       setError(error.response?.data?.error);
     }
@@ -78,7 +80,15 @@ export const AddNewPost = () => {
         sx={{ mt: 1 }}
       >
         <Box sx={{ p: 3, width: 700 }}>
-          <Typography variant="h6">Add New Post</Typography>
+          <Typography
+            variant="h6"
+            sx={{
+              mb: 2,
+            }}
+          >
+            Add New Post
+          </Typography>
+          <UploadImage onImageSelect={setImageUrl} />
           {error && (
             <Alert severity="error" sx={{ mt: 2 }}>
               {error}

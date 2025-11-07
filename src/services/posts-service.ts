@@ -10,12 +10,17 @@ export const getPostAll = (): Promise<PostDTO[]> => {
   return apiService.get();
 };
 
-export const createPost = (title: string, content: string): Promise<PostDTO> => {
-  return apiService.post('', { title, content });
+export const createPost = (title: string, content: string, imageUrl?: string): Promise<PostDTO> => {
+  return apiService.post('', { title, content, imageUrl });
 };
 
-export const updatePostFull = (id: string, title: string, content: string): Promise<PostDTO> => {
-  return apiService.put(id, { title, content });
+export const updatePostFull = (
+  id: string,
+  title: string,
+  content: string,
+  imageUrl?: string,
+): Promise<PostDTO> => {
+  return apiService.put(id, { title, content, imageUrl });
 };
 
 export const updatePostTitle = (id: string, title: string): Promise<PostDTO> => {

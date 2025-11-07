@@ -53,10 +53,10 @@ export const postItemSlice = createSlice({
       state,
       { payload: { id, title } }: { payload: { id: string; title: string } },
     ) => {
-      const postItems = state.postItems.find((item) => item.id === id);
+      const postItem = state.postItems.find((item) => item.id === id);
 
-      if (postItems) {
-        postItems.title = title;
+      if (postItem) {
+        postItem.title = title;
       }
     },
     updateItemContent: (
@@ -67,6 +67,22 @@ export const postItemSlice = createSlice({
       if (postItem) {
         postItem.content = content;
       }
+    },
+    updateItemFull: (
+      state,
+      {
+        payload: { id, title, content, imageUrl },
+      }: { payload: { id: string; title: string; content: string; imageUrl: string } },
+    ) => {
+      const postItem = state.postItems.find((item) => item.id === id);
+      if (postItem) {
+        postItem.title = title;
+        postItem.content = content;
+        postItem.imageUrl = imageUrl;
+      }
+    },
+    deletePost: (state, action: PayloadAction<string>) => {
+      state.postItems = state.postItems.filter((item) => item.id !== action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -89,4 +105,5 @@ export const postItemSlice = createSlice({
 
 export const postItemReducer = postItemSlice.reducer;
 
-export const { addPost, updateItemTitle, updateItemContent } = postItemSlice.actions;
+export const { addPost, updateItemTitle, updateItemContent, updateItemFull, deletePost } =
+  postItemSlice.actions;

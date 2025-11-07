@@ -26,6 +26,9 @@ export const StyledCard = styled(Container)`
   img {
     border-radius: 8px;
     margin-bottom: 16px;
+    object-fit: cover;
+    width: 100%;
+    height: 200px;
   }
 `;
 
