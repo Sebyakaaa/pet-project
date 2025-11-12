@@ -12,25 +12,21 @@ import { useDispatch } from 'react-redux';
 import { useNavigation } from '../../../hooks/use-navigation';
 import { deletePostById, updatePostField, updatePostFull } from '../../../services/posts-service';
 import { deletePost, updatePost } from '../../../store/slice';
+import { PostDTO } from '../../../types/post-dto';
 import { BaseButton } from '../../base-button';
 import { UploadImage } from '../../upload-image';
 
 import { StyledItem } from './styled';
 
-interface PostItemProps {
-  id: string;
-  title: string;
-  image?: string;
-  content: string;
-}
+type PostItemProps = PostDTO;
 
-export const PostItem = ({ id, image, title, content }: PostItemProps) => {
+export const PostItem = ({ id, imageUrl: image, title, content }: PostItemProps) => {
   const { goToPosts } = useNavigation();
 
   const [editedContent, setEditedContent] = useState(content);
   const [editedTitle, setEditedTitle] = useState(title);
   const [openDialog, setOpenDialog] = useState(false);
-  const [imageUrl, setImageUrl] = useState(image || '');
+  const [newImageUrl, setNewImageUrl] = useState(image || '');
 
   const dispatch = useDispatch();
 
@@ -53,8 +49,8 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
   };
 
   const handleSaveAllClick = async () => {
-    await updatePostFull(id, editedTitle, editedContent, imageUrl);
-    dispatch(updatePost({ id, title: editedTitle, content: editedContent, imageUrl: imageUrl }));
+    await updatePostFull(id, editedTitle, editedContent, newImageUrl);
+    dispatch(updatePost({ id, title: editedTitle, content: editedContent, imageUrl: newImageUrl }));
     goToPosts();
   };
 
@@ -77,12 +73,12 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
   };
 
   const handleDeleteImage = () => {
-    setImageUrl('');
+    setNewImageUrl('');
   };
 
   return (
     <StyledItem data-id={id} maxWidth="lg">
-      <img src={imageUrl} alt={`Blog Picture-${id}`} />
+      <img src={newImageUrl} alt={`Blog Picture-${id}`} />
       <Stack
         direction="row"
         spacing={2}
@@ -91,7 +87,7 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
           mb: 2,
         }}
       >
-        <UploadImage onImageSelect={setImageUrl} showPreview={false} />
+        <UploadImage onImageSelect={setNewImageUrl} showPreview={false} />
         <Button variant="outlined" onClick={handleDeleteImage} startIcon={<DeleteIcon />}>
           Delete image
         </Button>

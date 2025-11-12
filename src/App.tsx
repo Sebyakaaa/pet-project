@@ -9,7 +9,7 @@ import './App.css';
 import { LoginForm } from './components/login/login-form';
 import { PostItemPage } from './components/posts/post-item/post-item-page';
 import { PostsListPage } from './components/posts/posts-list/posts-list-page';
-import { ROUTES } from './hooks/const-routes';
+import { ROUTES } from './constants/const-routes';
 import { fetchPosts } from './store/slice';
 import { AppDispatch } from './store/store';
 

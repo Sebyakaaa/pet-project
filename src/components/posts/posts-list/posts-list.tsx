@@ -9,7 +9,7 @@ export const PostsList = ({ posts }: PostsListProps) => {
   return (
     <StyledList>
       {posts.map((item) => (
-        <PostCard key={item.id} id={item.id} title={item.title} image={item.imageUrl} />
+        <PostCard key={item.id} id={item.id} title={item.title} imageUrl={item.imageUrl} />
       ))}
     </StyledList>
   );

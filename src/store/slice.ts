@@ -1,23 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { getPostAll } from '../services/posts-service';
+import { PostDTO } from '../types/post-dto';
 
-type PostItem = {
+interface PostItemUpdate extends Partial<PostDTO> {
   id: string;
-  title: string;
-  content: string;
-  imageUrl?: string;
-};
-
-type PostItemUpdate = {
-  id: string;
-  title?: string;
-  content?: string;
-  imageUrl?: string;
-};
+}
 
 export interface PostItemState {
-  postItems: PostItem[];
+  postItems: PostDTO[];
   isLoading: boolean;
   error: string | null;
 }
@@ -42,7 +33,7 @@ export const postItemSlice = createSlice({
   name: 'postsList',
   initialState,
   reducers: {
-    addPost: (state, action: PayloadAction<PostItem>) => {
+    addPost: (state, action: PayloadAction<PostDTO>) => {
       state.postItems.push(action.payload);
     },
     updatePost: (state, action: PayloadAction<PostItemUpdate>) => {
@@ -53,39 +44,6 @@ export const postItemSlice = createSlice({
         Object.assign(postItem, updates);
       }
     },
-    // old redusers
-    // updateItemTitle: (
-    //   state,
-    //   { payload: { id, title } }: { payload: { id: string; title: string } },
-    // ) => {
-    //   const postItem = state.postItems.find((item) => item.id === id);
-
-    //   if (postItem) {
-    //     postItem.title = title;
-    //   }
-    // },
-    // updateItemContent: (
-    //   state,
-    //   { payload: { id, content } }: { payload: { id: string; content: string } },
-    // ) => {
-    //   const postItem = state.postItems.find((item) => item.id === id);
-    //   if (postItem) {
-    //     postItem.content = content;
-    //   }
-    // },
-    // updateItemFull: (
-    //   state,
-    //   {
-    //     payload: { id, title, content, imageUrl },
-    //   }: { payload: { id: string; title: string; content: string; imageUrl: string } },
-    // ) => {
-    //   const postItem = state.postItems.find((item) => item.id === id);
-    //   if (postItem) {
-    //     postItem.title = title;
-    //     postItem.content = content;
-    //     postItem.imageUrl = imageUrl;
-    //   }
-    // },
     deletePost: (state, action: PayloadAction<string>) => {
       state.postItems = state.postItems.filter((item) => item.id !== action.payload);
     },

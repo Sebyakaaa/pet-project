@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { ROUTES } from './const-routes';
+import { ROUTES } from '../constants/const-routes';
 
 export const useNavigation = () => {
   const navigate = useNavigate();

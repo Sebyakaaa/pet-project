@@ -25,5 +25,7 @@ export const PostItemPage = () => {
     return <EmptyPage />;
   }
 
-  return <PostItem id={post.id} image={post.imageUrl} title={post.title} content={post.content} />;
+  return (
+    <PostItem id={post.id} imageUrl={post.imageUrl} title={post.title} content={post.content} />
+  );
 };
