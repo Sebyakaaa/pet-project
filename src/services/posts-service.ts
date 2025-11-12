@@ -23,13 +23,20 @@ export const updatePostFull = (
   return apiService.put(id, { title, content, imageUrl });
 };
 
-export const updatePostTitle = (id: string, title: string): Promise<PostDTO> => {
-  return apiService.patch(id, { title });
+export const updatePostField = (
+  id: string,
+  updates: { title?: string; content?: string },
+): Promise<PostDTO> => {
+  return apiService.patch(id, updates);
 };
 
-export const updatePostContent = (id: string, content: string): Promise<PostDTO> => {
-  return apiService.patch(id, { content });
-};
+// export const updatePostTitle = (id: string, title: string): Promise<PostDTO> => {
+//   return apiService.patch(id, { title });
+// };
+
+// export const updatePostContent = (id: string, content: string): Promise<PostDTO> => {
+//   return apiService.patch(id, { content });
+// };
 
 export const deletePostById = (id: string): Promise<PostDTO> => {
   return apiService.delete(id);

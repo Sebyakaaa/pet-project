@@ -9,6 +9,13 @@ type PostItem = {
   imageUrl?: string;
 };
 
+type PostItemUpdate = {
+  id: string;
+  title?: string;
+  content?: string;
+  imageUrl?: string;
+};
+
 export interface PostItemState {
   postItems: PostItem[];
   isLoading: boolean;
@@ -35,52 +42,50 @@ export const postItemSlice = createSlice({
   name: 'postsList',
   initialState,
   reducers: {
-    // setLoading: (state, action: PayloadAction<boolean>) => {
-    //   state.isLoading = action.payload;
-    // },
-    // setPosts: (state, action: PayloadAction<PostItem[]>) => {
-    //   state.postItems = action.payload;
-    //   state.isLoading = false;
-    // },
-    // setError: (state, action: PayloadAction<string>) => {
-    //   state.error = action.payload;
-    //   state.isLoading = false;
-    // },
     addPost: (state, action: PayloadAction<PostItem>) => {
       state.postItems.push(action.payload);
     },
-    updateItemTitle: (
-      state,
-      { payload: { id, title } }: { payload: { id: string; title: string } },
-    ) => {
+    updatePost: (state, action: PayloadAction<PostItemUpdate>) => {
+      const { id, ...updates } = action.payload;
       const postItem = state.postItems.find((item) => item.id === id);
 
       if (postItem) {
-        postItem.title = title;
+        Object.assign(postItem, updates);
       }
     },
-    updateItemContent: (
-      state,
-      { payload: { id, content } }: { payload: { id: string; content: string } },
-    ) => {
-      const postItem = state.postItems.find((item) => item.id === id);
-      if (postItem) {
-        postItem.content = content;
-      }
-    },
-    updateItemFull: (
-      state,
-      {
-        payload: { id, title, content, imageUrl },
-      }: { payload: { id: string; title: string; content: string; imageUrl: string } },
-    ) => {
-      const postItem = state.postItems.find((item) => item.id === id);
-      if (postItem) {
-        postItem.title = title;
-        postItem.content = content;
-        postItem.imageUrl = imageUrl;
-      }
-    },
+    // old redusers
+    // updateItemTitle: (
+    //   state,
+    //   { payload: { id, title } }: { payload: { id: string; title: string } },
+    // ) => {
+    //   const postItem = state.postItems.find((item) => item.id === id);
+
+    //   if (postItem) {
+    //     postItem.title = title;
+    //   }
+    // },
+    // updateItemContent: (
+    //   state,
+    //   { payload: { id, content } }: { payload: { id: string; content: string } },
+    // ) => {
+    //   const postItem = state.postItems.find((item) => item.id === id);
+    //   if (postItem) {
+    //     postItem.content = content;
+    //   }
+    // },
+    // updateItemFull: (
+    //   state,
+    //   {
+    //     payload: { id, title, content, imageUrl },
+    //   }: { payload: { id: string; title: string; content: string; imageUrl: string } },
+    // ) => {
+    //   const postItem = state.postItems.find((item) => item.id === id);
+    //   if (postItem) {
+    //     postItem.title = title;
+    //     postItem.content = content;
+    //     postItem.imageUrl = imageUrl;
+    //   }
+    // },
     deletePost: (state, action: PayloadAction<string>) => {
       state.postItems = state.postItems.filter((item) => item.id !== action.payload);
     },
@@ -105,5 +110,4 @@ export const postItemSlice = createSlice({
 
 export const postItemReducer = postItemSlice.reducer;
 
-export const { addPost, updateItemTitle, updateItemContent, updateItemFull, deletePost } =
-  postItemSlice.actions;
+export const { addPost, updatePost, deletePost } = postItemSlice.actions;

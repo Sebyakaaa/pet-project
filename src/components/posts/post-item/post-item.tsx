@@ -10,18 +10,8 @@ import TextField from '@mui/material/TextField';
 import { useDispatch } from 'react-redux';
 
 import { useNavigation } from '../../../hooks/use-navigation';
-import {
-  deletePostById,
-  updatePostContent,
-  updatePostFull,
-  updatePostTitle,
-} from '../../../services/posts-service';
-import {
-  deletePost,
-  updateItemContent,
-  updateItemFull,
-  updateItemTitle,
-} from '../../../store/slice';
+import { deletePostById, updatePostField, updatePostFull } from '../../../services/posts-service';
+import { deletePost, updatePost } from '../../../store/slice';
 import { BaseButton } from '../../base-button';
 import { UploadImage } from '../../upload-image';
 
@@ -53,20 +43,18 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
   };
 
   const handleSaveTitleClick = async () => {
-    await updatePostTitle(id, editedTitle);
-    dispatch(updateItemTitle({ id, title: editedTitle }));
+    await updatePostField(id, { title: editedTitle });
+    dispatch(updatePost({ id, title: editedTitle }));
   };
 
   const handleSaveContentClick = async () => {
-    await updatePostContent(id, editedContent);
-    dispatch(updateItemContent({ id, content: editedContent }));
+    await updatePostField(id, { content: editedContent });
+    dispatch(updatePost({ id, content: editedContent }));
   };
 
   const handleSaveAllClick = async () => {
     await updatePostFull(id, editedTitle, editedContent, imageUrl);
-    dispatch(
-      updateItemFull({ id, title: editedTitle, content: editedContent, imageUrl: imageUrl }),
-    );
+    dispatch(updatePost({ id, title: editedTitle, content: editedContent, imageUrl: imageUrl }));
     goToPosts();
   };
 
