@@ -9,9 +9,9 @@ import './App.css';
 import { LoginForm } from './components/login/login-form';
 import { PostItemPage } from './components/posts/post-item/post-item-page';
 import { PostsListPage } from './components/posts/posts-list/posts-list-page';
-import { fetchPosts } from './components/posts/store/slice';
-import { AppDispatch } from './components/posts/store/store';
 import { ROUTES } from './hooks/const-routes';
+import { fetchPosts } from './store/slice';
+import { AppDispatch } from './store/store';
 
 const darkTheme = createTheme({
   palette: {

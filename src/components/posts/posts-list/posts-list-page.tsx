@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import { RootState } from '../../../store/store';
 import { Loader } from '../../loader';
-import { RootState } from '../store/store';
 
 import { AddNewPost } from './add-new-post';
 import { PostsList } from './posts-list';

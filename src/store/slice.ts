@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { getPostAll } from '../../../services/posts-service';
+import { getPostAll } from '../services/posts-service';
 
 type PostItem = {
   id: string;
@@ -17,7 +17,7 @@ export interface PostItemState {
 
 const initialState: PostItemState = {
   postItems: [],
-  isLoading: false,
+  isLoading: true,
   error: null,
 };
 

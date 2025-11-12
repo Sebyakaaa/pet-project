@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import Popover from '@mui/material/Popover';
 import Stack from '@mui/material/Stack';
@@ -11,9 +12,9 @@ import Typography from '@mui/material/Typography';
 import { useDispatch } from 'react-redux';
 
 import { createPost } from '../../../services/posts-service';
+import { addPost } from '../../../store/slice';
 import { BaseButton } from '../../base-button';
 import { UploadImage } from '../../upload-image';
-import { addPost } from '../store/slice';
 
 import { StyledAddContainer } from './styled';
 
@@ -121,7 +122,9 @@ export const AddNewPost = () => {
             }}
           >
             <BaseButton onClick={handleAddPost}>Add Post</BaseButton>
-            <BaseButton onClick={handleClose}>Cancel</BaseButton>
+            <Button variant="outlined" onClick={handleClose}>
+              Cancel
+            </Button>
           </Stack>
         </Box>
       </Popover>

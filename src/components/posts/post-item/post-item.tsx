@@ -16,9 +16,14 @@ import {
   updatePostFull,
   updatePostTitle,
 } from '../../../services/posts-service';
+import {
+  deletePost,
+  updateItemContent,
+  updateItemFull,
+  updateItemTitle,
+} from '../../../store/slice';
 import { BaseButton } from '../../base-button';
 import { UploadImage } from '../../upload-image';
-import { deletePost, updateItemContent, updateItemFull, updateItemTitle } from '../store/slice';
 
 import { StyledItem } from './styled';
 
@@ -151,7 +156,9 @@ export const PostItem = ({ id, image, title, content }: PostItemProps) => {
         }}
       >
         <BaseButton onClick={handleSaveAllClick}>Save all</BaseButton>
-        <BaseButton onClick={handleCancelClick}>Cancel</BaseButton>
+        <Button variant="outlined" onClick={handleCancelClick}>
+          Cancel
+        </Button>
         <Button variant="outlined" onClick={handleDeleteDialogOpen} startIcon={<DeleteIcon />}>
           Delete post
         </Button>

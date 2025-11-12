@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
+import { RootState } from '../../../store/store';
 import { EmptyPage } from '../../empty-page';
 import { Loader } from '../../loader';
-import { RootState } from '../store/store';
 
 import { PostItem } from './post-item';
 

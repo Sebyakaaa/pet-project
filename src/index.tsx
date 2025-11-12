@@ -6,9 +6,9 @@ import { HashRouter } from 'react-router';
 
 import { App } from './App';
 import './index.css';
-import { store } from './components/posts/store/store';
 import reportWebVitals from './reportWebVitals';
 import { setupMockAPI } from './services/mock-api';
+import { store } from './store/store';
 
 // Активируем Mock API для перехвата запросов
 setupMockAPI();
