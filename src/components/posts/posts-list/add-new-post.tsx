@@ -11,8 +11,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useDispatch } from 'react-redux';
 
-import { createPost } from '../../../services/posts-service';
-import { addPost } from '../../../store/slice';
+import { createNewPost } from '../../../store/slice';
+import { AppDispatch } from '../../../store/store';
 import { BaseButton } from '../../base-button';
 import { UploadImage } from '../../upload-image';
 
@@ -25,7 +25,7 @@ export const AddNewPost = () => {
   const [content, setContent] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -34,6 +34,7 @@ export const AddNewPost = () => {
   const clearFields = () => {
     setTitle('');
     setContent('');
+    setImageUrl('');
     setError(null);
   };
 
@@ -60,13 +61,8 @@ export const AddNewPost = () => {
     if (hasValidationErrors()) {
       return;
     }
-    try {
-      const newPost = await createPost(title, content, imageUrl);
-      dispatch(addPost(newPost));
-      handleClose();
-    } catch (error: any) {
-      setError(error.response?.data?.error);
-    }
+    await dispatch(createNewPost({ title, content, imageUrl }));
+    handleClose();
   };
 
   return (

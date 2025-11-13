@@ -8,14 +8,11 @@ import { RootState } from '../store/store';
 export const PostsListPage = () => {
   const { isLoading, postItems } = useSelector((state: RootState) => state.postList);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <>
       <AddNewPost />
       <PostsList posts={postItems} />
+      {isLoading && <Loader />}
     </>
   );
 };

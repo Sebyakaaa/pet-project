@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 
-import { getPostAll } from '../services/posts-service';
+import { createPost, deletePostById, getPostAll } from '../services/posts-service';
 import { PostDTO } from '../types/post-dto';
 
 interface PostItemUpdate extends Partial<PostDTO> {
@@ -29,13 +29,26 @@ export const fetchPosts = createAsyncThunk('posts/fetchAll', async (_, { rejectW
   }
 });
 
+export const createNewPost = createAsyncThunk(
+  'posts/create',
+  async (
+    { title, content, imageUrl }: { title: string; content: string; imageUrl?: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const newPost = await createPost(title, content, imageUrl);
+      return newPost;
+    } catch (error: any) {
+      const message = error.response?.data?.error || error.message || 'Failed to create post';
+      return rejectWithValue(message);
+    }
+  },
+);
+
 export const postItemSlice = createSlice({
   name: 'postsList',
   initialState,
   reducers: {
-    addPost: (state, action: PayloadAction<PostDTO>) => {
-      state.postItems.push(action.payload);
-    },
     updatePost: (state, action: PayloadAction<PostItemUpdate>) => {
       const { id, ...updates } = action.payload;
       const postItem = state.postItems.find((item) => item.id === id);
@@ -62,10 +75,23 @@ export const postItemSlice = createSlice({
       .addCase(fetchPosts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
+      })
+      .addCase(createNewPost.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(createNewPost.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.postItems.unshift(action.payload); //add to the top
+        state.error = null;
+      })
+      .addCase(createNewPost.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       });
   },
 });
 
 export const postItemReducer = postItemSlice.reducer;
 
-export const { addPost, updatePost, deletePost } = postItemSlice.actions;
+export const { updatePost, deletePost } = postItemSlice.actions;
