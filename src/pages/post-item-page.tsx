@@ -1,11 +1,10 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
-import { RootState } from '../../../store/store';
-import { EmptyPage } from '../../empty-page';
-import { Loader } from '../../loader';
-
-import { PostItem } from './post-item';
+import { EmptyPage } from '../components/empty-page';
+import { Loader } from '../components/loader';
+import { PostItem } from '../components/posts/post-item/post-item';
+import { RootState } from '../store/store';
 
 export const PostItemPage = () => {
   const { id } = useParams<{ id: string }>();

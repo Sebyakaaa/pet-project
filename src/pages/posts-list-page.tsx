@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RootState } from '../../../store/store';
-import { Loader } from '../../loader';
-
-import { AddNewPost } from './add-new-post';
-import { PostsList } from './posts-list';
+import { Loader } from '../components/loader';
+import { AddNewPost } from '../components/posts/posts-list/add-new-post';
+import { PostsList } from '../components/posts/posts-list/posts-list';
+import { RootState } from '../store/store';
 
 export const PostsListPage = () => {
   const { isLoading, postItems } = useSelector((state: RootState) => state.postList);

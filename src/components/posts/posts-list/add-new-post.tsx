@@ -44,13 +44,20 @@ export const AddNewPost = () => {
 
   const open = Boolean(anchorEl);
 
-  const handleAddPost = async () => {
+  const hasValidationErrors = () => {
     if (!title.trim()) {
       setError('Title is required');
-      return;
+      return true;
     }
     if (!content.trim()) {
       setError('Content is required');
+      return true;
+    }
+    return false;
+  };
+
+  const handleAddPost = async () => {
+    if (hasValidationErrors()) {
       return;
     }
     try {

@@ -7,9 +7,9 @@ import { Navigate, Route, Routes } from 'react-router';
 
 import './App.css';
 import { LoginForm } from './components/login/login-form';
-import { PostItemPage } from './components/posts/post-item/post-item-page';
-import { PostsListPage } from './components/posts/posts-list/posts-list-page';
 import { ROUTES } from './constants/const-routes';
+import { PostItemPage } from './pages/post-item-page';
+import { PostsListPage } from './pages/posts-list-page';
 import { fetchPosts } from './store/slice';
 import { AppDispatch } from './store/store';
 
