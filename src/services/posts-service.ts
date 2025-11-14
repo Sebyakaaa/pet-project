@@ -16,8 +16,8 @@ export const createPost = (title: string, content: string, imageUrl?: string): P
 
 export const updatePostFull = (
   id: string,
-  title: string,
-  content: string,
+  title?: string,
+  content?: string,
   imageUrl?: string,
 ): Promise<PostDTO> => {
   return apiService.put(id, { title, content, imageUrl });

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import DeleteIcon from '@mui/icons-material/Delete';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -10,10 +11,12 @@ import TextField from '@mui/material/TextField';
 import { useDispatch } from 'react-redux';
 
 import { useNavigation } from '../../../hooks/use-navigation';
-import { deletePostById, updatePostField, updatePostFull } from '../../../services/posts-service';
-import { deletePost, updatePost } from '../../../store/slice';
+import { updatePost, removePost } from '../../../store/slice';
+import { AppDispatch } from '../../../store/store';
 import { PostDTO } from '../../../types/post-dto';
+import { validateContent, validateTitle } from '../../../utils/validate-post';
 import { BaseButton } from '../../base-button';
+import { ImageDisplay } from '../../image-display';
 import { UploadImage } from '../../upload-image';
 
 import { StyledItem } from './styled';
@@ -23,12 +26,13 @@ type PostItemProps = PostDTO;
 export const PostItem = ({ id, imageUrl: image, title, content }: PostItemProps) => {
   const { goToPosts } = useNavigation();
 
-  const [editedContent, setEditedContent] = useState(content);
   const [editedTitle, setEditedTitle] = useState(title);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [editedContent, setEditedContent] = useState(content);
   const [newImageUrl, setNewImageUrl] = useState(image || '');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEditedTitle(event.target.value);
@@ -38,19 +42,40 @@ export const PostItem = ({ id, imageUrl: image, title, content }: PostItemProps)
     setEditedContent(event.target.value);
   };
 
-  const handleSaveTitleClick = async () => {
-    await updatePostField(id, { title: editedTitle });
-    dispatch(updatePost({ id, title: editedTitle }));
+  const handleSaveTitleClick = () => {
+    const error = validateTitle(editedTitle);
+    if (error) {
+      setError(error);
+      return;
+    }
+    setError(null);
+    dispatch(updatePost({ id, updates: { title: editedTitle } }));
   };
 
-  const handleSaveContentClick = async () => {
-    await updatePostField(id, { content: editedContent });
-    dispatch(updatePost({ id, content: editedContent }));
+  const handleSaveContentClick = () => {
+    const error = validateContent(editedContent);
+    if (error) {
+      setError(error);
+      return;
+    }
+    setError(null);
+    dispatch(updatePost({ id, updates: { content: editedContent } }));
   };
 
   const handleSaveAllClick = async () => {
-    await updatePostFull(id, editedTitle, editedContent, newImageUrl);
-    dispatch(updatePost({ id, title: editedTitle, content: editedContent, imageUrl: newImageUrl }));
+    const error = validateTitle(editedTitle) || validateContent(editedContent);
+    if (error) {
+      setError(error);
+      return;
+    }
+    setError(null);
+    await dispatch(
+      updatePost({
+        id,
+        updates: { title: editedTitle, content: editedContent, imageUrl: newImageUrl },
+        fullUpdate: true,
+      }),
+    );
     goToPosts();
   };
 
@@ -63,8 +88,7 @@ export const PostItem = ({ id, imageUrl: image, title, content }: PostItemProps)
   };
 
   const handleDeletePostClick = async () => {
-    await deletePostById(id);
-    dispatch(deletePost(id));
+    await dispatch(removePost(id));
     goToPosts();
   };
 
@@ -78,7 +102,7 @@ export const PostItem = ({ id, imageUrl: image, title, content }: PostItemProps)
 
   return (
     <StyledItem data-id={id} maxWidth="lg">
-      <img src={newImageUrl} alt={`Blog Picture-${id}`} />
+      <ImageDisplay id={id} imageUrl={newImageUrl} />
       <Stack
         direction="row"
         spacing={2}
@@ -92,6 +116,11 @@ export const PostItem = ({ id, imageUrl: image, title, content }: PostItemProps)
           Delete image
         </Button>
       </Stack>
+      {error && (
+        <Alert severity="error" sx={{ mt: 2 }}>
+          {error}
+        </Alert>
+      )}
       <TextField
         fullWidth
         multiline

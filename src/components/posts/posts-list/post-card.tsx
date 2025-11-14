@@ -1,5 +1,6 @@
 import { useNavigation } from '../../../hooks/use-navigation';
 import { PostCardDTO } from '../../../types/post-dto';
+import { ImageDisplay } from '../../image-display';
 
 import { StyledCard } from './styled';
 
@@ -14,7 +15,7 @@ export const PostCard = ({ id, imageUrl, title }: PostCardProps) => {
   return (
     <StyledCard data-id={id} maxWidth="sm" sx={{ p: 3 }} onClick={handleClick}>
       <h3>{title}</h3>
-      <img src={imageUrl} loading="lazy" alt={`Blog Picture-${id}`} />
+      <ImageDisplay id={id} imageUrl={imageUrl} />
     </StyledCard>
   );
 };
