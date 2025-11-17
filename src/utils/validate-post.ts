@@ -1,13 +1,6 @@
-export const validateTitle = (title: string): string | null => {
-  if (!title.trim()) {
-    return 'Title is required';
-  }
-  return null;
-};
-
-export const validateContent = (content: string): string | null => {
-  if (!content.trim()) {
-    return 'Content is required';
+export const validateField = (fieldName: string, value: string): string | null => {
+  if (!value.trim()) {
+    return `${fieldName} is required`;
   }
   return null;
 };

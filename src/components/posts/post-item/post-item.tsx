@@ -14,7 +14,7 @@ import { useNavigation } from '../../../hooks/use-navigation';
 import { updatePost, removePost } from '../../../store/slice';
 import { AppDispatch } from '../../../store/store';
 import { PostDTO } from '../../../types/post-dto';
-import { validateContent, validateTitle } from '../../../utils/validate-post';
+import { validateField } from '../../../utils/validate-post';
 import { BaseButton } from '../../base-button';
 import { ImageDisplay } from '../../image-display';
 import { UploadImage } from '../../upload-image';
@@ -43,7 +43,7 @@ export const PostItem = ({ id, imageUrl: image, title, content }: PostItemProps)
   };
 
   const handleSaveTitleClick = () => {
-    const error = validateTitle(editedTitle);
+    const error = validateField('Title', editedTitle);
     if (error) {
       setError(error);
       return;
@@ -53,7 +53,7 @@ export const PostItem = ({ id, imageUrl: image, title, content }: PostItemProps)
   };
 
   const handleSaveContentClick = () => {
-    const error = validateContent(editedContent);
+    const error = validateField('Content', editedContent);
     if (error) {
       setError(error);
       return;
@@ -63,7 +63,7 @@ export const PostItem = ({ id, imageUrl: image, title, content }: PostItemProps)
   };
 
   const handleSaveAllClick = async () => {
-    const error = validateTitle(editedTitle) || validateContent(editedContent);
+    const error = validateField('Title', editedTitle) || validateField('Content', editedContent);
     if (error) {
       setError(error);
       return;

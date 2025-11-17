@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 
 import { createNewPost } from '../../../store/slice';
 import { AppDispatch } from '../../../store/store';
-import { validateContent, validateTitle } from '../../../utils/validate-post';
+import { validateField } from '../../../utils/validate-post';
 import { BaseButton } from '../../base-button';
 import { UploadImage } from '../../upload-image';
 
@@ -47,7 +47,7 @@ export const AddNewPost = () => {
   const open = Boolean(anchorEl);
 
   const handleAddPost = async () => {
-    const error = validateTitle(title) || validateContent(content);
+    const error = validateField('Title', title) || validateField('Content', content);
     if (error) {
       setError(error);
       return;
